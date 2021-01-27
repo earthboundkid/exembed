@@ -14,22 +14,20 @@ func main() {
 	http.ListenAndServe(":8888", nil)
 }
 
+//go:embed static
+var embededFiles embed.FS
+
 func getFileSystem(useOS bool) http.FileSystem {
-	var fsys fs.FS
 	if useOS {
 		log.Print("using live mode")
-		fsys = os.DirFS("static")
-	} else {
-		log.Print("using embed mode")
-		var (
-			//go:embed static
-			files embed.FS
-			err   error
-		)
-		fsys, err = fs.Sub(files, "static")
-		if err != nil {
-			panic(err)
-		}
+		return http.FS(os.DirFS("static"))
 	}
+
+	log.Print("using embed mode")
+	fsys, err := fs.Sub(embededFiles, "static")
+	if err != nil {
+		panic(err)
+	}
+
 	return http.FS(fsys)
 }

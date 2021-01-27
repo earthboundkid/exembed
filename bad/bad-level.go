@@ -5,9 +5,8 @@ import (
 	"fmt"
 )
 
-//go:embed quine.go
-var src string
-
 func main() {
-	fmt.Print(src)
+	//go:embed file.txt
+	var s string
+	fmt.Print(s)
 }
