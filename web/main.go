@@ -15,7 +15,7 @@ func main() {
 }
 
 //go:embed static
-var embededFiles embed.FS
+var embeddedFiles embed.FS
 
 func getFileSystem(useOS bool) http.FileSystem {
 	if useOS {
@@ -24,7 +24,7 @@ func getFileSystem(useOS bool) http.FileSystem {
 	}
 
 	log.Print("using embed mode")
-	fsys, err := fs.Sub(embededFiles, "static")
+	fsys, err := fs.Sub(embeddedFiles, "static")
 	if err != nil {
 		panic(err)
 	}
